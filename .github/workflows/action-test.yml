@@ -1,0 +1,31 @@
+name: action test
+on:
+  push: 
+    branches:
+      - main # 针对的是main分支的push事件
+    paths:
+      - '.github/workflows/*' # 仅当此文件发生变化时触发
+      - 'README.md' # 也可以添加其他文件或目录
+      - 'src/**' # 监控src目录下的所有文件变化
+      - 'bin/**' # 监控bin目录下的所有文件变化
+      - 'package.json' # 监控package.json文件变化
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # 使用最新的Ubuntu环境
+    
+    steps:
+      - uses: actions/checkout@v2 # 检出代码
+
+      - name: mkdir # 创建文件夹
+        run: mkdir test-folder
+
+      - name: create a file # 创建文件
+        run: |
+          cd test-folder
+          touch a.txt
+          echo "hello world" > a.txt
+          cat a.txt
+
+      - name: delete a file # 删除文件
+        run: rm -rf a.txt
