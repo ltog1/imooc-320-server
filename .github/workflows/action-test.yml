@@ -44,6 +44,7 @@ jobs:
           git checkout main
           git pull origin main
           npm install
+          npm install -g pm2
           npm run prd
 
       - name: delete id_rsa # 删除id_rsa
