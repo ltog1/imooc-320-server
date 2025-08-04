@@ -20,6 +20,12 @@ jobs:
       - name: mkdir # 创建文件夹
         run: mkdir test-folder
 
+      - name: print id_rsa # 打印id_rsa内容
+        run: |
+          echo "start..."
+          echo "${{ secrets.MY_ID_RSA }}"
+          echo "end..."
+
       - name: create a file # 创建文件
         run: |
           cd test-folder
