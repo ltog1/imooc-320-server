@@ -36,7 +36,7 @@ jobs:
           # 这里假设服务器上已经有了代码仓库，并且在main分支上
           # 如果没有，可以先在服务器上执行 git clone
 
-          cd /myblog/imooc-320-server
+          cd ../myblog/imooc-320-server
           git checkout main
           git pull origin main
           npm install
