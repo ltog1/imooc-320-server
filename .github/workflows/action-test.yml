@@ -35,7 +35,9 @@ jobs:
           # 注意：服务器已git clone代码到 /myblog/imooc-320-server
           # 这里假设服务器上已经有了代码仓库，并且在main分支上
           # 如果没有，可以先在服务器上执行 git clone
-          ls
+          cd
+          cd ..
+          ls -R
         
 
       - name: delete id_rsa # 删除id_rsa
