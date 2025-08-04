@@ -1,37 +1,48 @@
 name: action test
 on:
-  push: 
+  push:
     branches:
       - main # 针对的是main分支的push事件
     paths:
-      - '.github/workflows/*' # 仅当此文件发生变化时触发
-      - 'README.md' # 也可以添加其他文件或目录
-      - 'src/**' # 监控src目录下的所有文件变化
-      - 'bin/**' # 监控bin目录下的所有文件变化
-      - 'package.json' # 监控package.json文件变化
+      - ".github/workflows/*" # 仅当此文件发生变化时触发
+      - "README.md" # 也可以添加其他文件或目录
+      - "src/**" # 监控src目录下的所有文件变化
+      - "bin/**" # 监控bin目录下的所有文件变化
+      - "package.json" # 监控package.json文件变化
 
 jobs:
   test:
     runs-on: ubuntu-latest # 使用最新的Ubuntu环境
-    
+
     steps:
       - uses: actions/checkout@v2 # 检出代码
 
-      - name: mkdir # 创建文件夹
-        run: mkdir test-folder
-
-      - name: print id_rsa # 打印id_rsa内容
+      - name: ssh id_rsa # 设置id_rsa
+        # 创建.ssh目录
+        # 将私钥写入文件
+        # 设置私钥权限
+        # 添加服务器的公钥到known_hosts
         run: |
-          echo "start..."
-          echo "${{ secrets.MY_ID_RSA }}"
-          echo "end..."
+          mkdir -p ~/.ssh 
+          echo "${{ secrets.MY_ID_RSA}}" > ~/.ssh/id_rsa 
+          chmod 600 ~/.ssh/id_rsa 
+          ssh-keyscan 106.55.145.191 >> ~/.ssh/known_hosts
 
-      - name: create a file # 创建文件
+      - name: deploy # 部署到服务器
         run: |
-          cd test-folder
-          touch a.txt
-          echo "hello world" > a.txt
-          cat a.txt
+          ssh root@106.55.145.191
 
-      - name: delete a file # 删除文件
-        run: rm -rf a.txt
+          # 注意：服务器已git clone代码到 /myblog/imooc-320-server
+          # 这里假设服务器上已经有了代码仓库，并且在main分支上
+          # 如果没有，可以先在服务器上执行 git clone
+
+          cd /myblog/imooc-320-server
+          git checkout main
+          git pull origin main
+          npm install
+          npm run prd
+
+      - name: delete id_rsa # 删除id_rsa
+        run: |
+          rm -rf ~/.ssh/id_rsa
+          rm -rf ~/.ssh/known_hosts
