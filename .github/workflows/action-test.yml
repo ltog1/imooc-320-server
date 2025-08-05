@@ -49,6 +49,9 @@ jobs:
         
           sudo mkdir -p /var/www/my_folder
           sudo chown $USER: /var/www/my_folder
+          ls -la /var/www/my_folder
+          chmod 755 /var/www/my_folder
+
 
       - name: delete id_rsa # 删除id_rsa
         run: |
