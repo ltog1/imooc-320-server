@@ -30,7 +30,7 @@ jobs:
 
       - name: deploy # 部署到服务器
         run: |
-          ssh root@106.55.145.191
+          ssh -t root@106.55.145.191
 
           # 注意：服务器已git clone代码到 /myblog/imooc-320-server
           # 这里假设服务器上已经有了代码仓库，并且在main分支上
@@ -46,11 +46,12 @@ jobs:
           # npm install
           # npm install -g pm2
           # npm run prd
-        
-          sudo mkdir -p /var/www/my_folder
-          sudo chown $USER: /var/www/my_folder
-          ls -la /var/www/my_folder
-          chmod 755 /var/www/my_folder
+
+          echo '当前用户: $(whoami)' && \
+          echo '当前路径: $(pwd)' && \
+          sudo mkdir -p /var/www/my_folder && \
+          sudo chown runner:runner /var/www/my_folder && \
+          ls -la /var/www/
 
 
       - name: delete id_rsa # 删除id_rsa
