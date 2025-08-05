@@ -47,9 +47,8 @@ jobs:
           # npm install -g pm2
           # npm run prd
         
-          sudo mkdir -p /myblog-test
-          sudo chown $USER: /myblog-test
-          echo "文件夹路径：$(realpath /myblog-test)"
+          sudo mkdir -p /var/www/my_folder
+          sudo chown $USER: /var/www/my_folder
 
       - name: delete id_rsa # 删除id_rsa
         run: |
