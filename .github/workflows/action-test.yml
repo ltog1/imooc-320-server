@@ -36,23 +36,16 @@ jobs:
           # 这里假设服务器上已经有了代码仓库，并且在main分支上
           # 如果没有，可以先在服务器上执行 git clone
 
-          # mkdir -p myblog-test
-          # cd myblog-test
-          # git clone https://github.com/ltog1/imooc-320-server.git
-          # cd imooc-320-server
-          # git checkout .
-          # git checkout main
-          # git pull origin main
-          # npm install
-          # npm install -g pm2
-          # npm run prd
-
-          echo '当前用户: $(whoami)' && \
-          echo '当前路径: $(pwd)' && \
-          sudo mkdir -p /var/www/my_folder && \
-          sudo chown runner:runner /var/www/my_folder && \
-          ls -la /var/www/
-
+          mkdir -p myblog-test
+          cd myblog-test
+          git clone https://github.com/ltog1/imooc-320-server.git
+          cd imooc-320-server
+          git checkout .
+          git checkout main
+          git pull origin main
+          npm install
+          npm install -g pm2
+          npm run prd
 
       - name: delete id_rsa # 删除id_rsa
         run: |
